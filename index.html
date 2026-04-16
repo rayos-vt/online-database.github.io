@@ -5,17 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="styles\styles.css" rel="stylesheet">
-    <link rel="manifest" href="/app.webmanifest" crossorigin="use-credentials"/>
+    <link rel="manifest" href="/webmanifest.json" crossorigin="use-credentials"/>
   </head>
   <body>
-    <header>
+    <div id="slideshow" class="normal" style="display: none">
+      <div id="navBar"></div>
+      <img id="mainImage" onclick="toggle_fullscreen()"></img>
+    </div>
+    <div id="startScreen">
       <form action="javascript:;" onsubmit=" update_query() ">
         <input type="search" id="query" name="query" placeholder="Enter tags"></input>
       </form>
-    </header>
-    <main id="content">
-    </main>
-    <footer></footer>
+      <div id="gallery">
+      </div>
+    </div>
   </body>
   <script src="scripts\main.js" async></script>
 </html>

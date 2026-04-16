@@ -1,5 +1,7 @@
 const SELECT = 'SELECT * FROM imagedata';
-const mainBody = document.getElementById('content');
+const slideshow = document.getElementById('slideshow');
+const startScreen = document.getElementById('startScreen');
+const gallery = document.getElementById('gallery');
 const op = '[<>=!]=?'
 const regexp = new RegExp(`\\w+${op}[\\w\*\\.\\-\\(\\)/]+[web(p|m)]?`, "i");
 const repexp = new RegExp(`(\\w+${op})([\\.\\w/]+)`, "i");
@@ -84,8 +86,6 @@ function update_query(join = '', where=' WHERE ', having = '', limit=1000) {
 }
 function update_gallery(data) {
     
-    mainBody.innerHTML = ''
-
     data.forEach( async (row) => {
         
         thumbnail = `<img class="thumbnail" src=/images/${row[1]}>`
@@ -101,10 +101,10 @@ function update_gallery(data) {
             `<button class="row" onclick="select_row(this, event)">${thumbnail}${filename}${details}</button>`
             );
         });
-        mainBody.innerHTML = rows;
+        gallery.innerHTML = rows;
         
         // rows += (
-        //     `<div class="row"><button class="row-content" onclick="select_row(this, event)">${thumbnail}${filename}</button>${details}</div>`
+        //     `<div id="" class="row"><button class="row-content" onclick="select_row(this, event)">${thumbnail}${filename}</button>${details}</div>`
         //     );
         // });
 
@@ -114,33 +114,17 @@ function update_row() {
 }
 function select_row(row, event) {
 
-    mainBody.innerHTML = ''
     current = row;
 
-    navBar = '<div id="navigation" class="normal" onclick="to_gallery()"></div>';
-    src = row.children[0].attributes.src.value;
-    image = `<img id="slideshow" class="normal" onclick="toggle_fullscreen()" src=${src}>`;
-
-    pageContent = navBar + image;
-
-    mainBody.innerHTML = pageContent;
+    slideshow.children[1].src = row.children[0].attributes.src.value;
+    slideshow.style.display = 'block';
+    startScreen.style.display = 'none';
 }
 function toggle_fullscreen() {
-    
-    elements = document.getElementsByClassName("fullscreen");
 
-    if (elements.length) {
-        for (const element of elements.children) {
-            element.class = "normal";
-        }
-    }
-    else {
-        elements = document.getElementsByClassName("normal");
-        for (const element of elements.children) {
-            element.class = "fullscreen";
-        }
-    }
+    slideshow.className = (slideshow.className == "normal") ? "fullscreen" : "normal";
 }
 function to_gallery() {
-    mainBody.innerHTML = rows;
+    slideshow.style.display = 'none';
+    startScreen.style.display = 'block';
 }
